@@ -1,0 +1,154 @@
+.to-do {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.1);
+
+  .todo-input {
+    padding: 10px 15px;
+    font-size: 24px;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    box-sizing: border-box;
+
+    &::-webkit-input-placeholder {
+      font-style: italic;
+      font-weight: 300;
+      color: #e6e6e6;
+    }
+    
+    &::-moz-placeholder {
+      font-style: italic;
+      font-weight: 300;
+      color: #e6e6e6;
+    }
+
+    &::input-placeholder {
+      font-style: italic;
+      font-weight: 300;
+      color: #e6e6e6;
+    }
+  }
+}
+
+.board {
+  display: flex;
+  flex-direction: row;
+  padding: 5px 0;
+
+  .board-content {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .board-right {
+    flex: 1;
+    padding: 0 10px;
+  }
+
+  .board-item,
+  .bt-add-board {
+    border-radius: 50px;
+    background: none;
+    outline: none;
+    border: solid 1px #e0e4ec;
+    padding: 4px 15px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #BCC1CB;
+    
+    &:hover {
+      color: #A2A2A5;
+      border-color: #A2A2A5;
+    }
+
+    &.is-active {
+      border-color: #31A5F7;
+      color: #31A5F7;
+    }
+
+    & + .board-item {
+      margin-left: 10px;
+    }
+  }
+
+  .bt-add-board {
+    border-style: dashed;
+  }
+
+  .board-input {
+    border: none;
+    outline: none;
+    width: auto;
+    max-width: 100px;
+
+    &::-webkit-input-placeholder {
+      font-style: italic;
+      font-weight: 300;
+      color: #e6e6e6;
+    }
+    
+    &::-moz-placeholder {
+      font-style: italic;
+      font-weight: 300;
+      color: #e6e6e6;
+    }
+
+    &::input-placeholder {
+      font-style: italic;
+      font-weight: 300;
+      color: #e6e6e6;
+    }
+  }
+}
+
+.todo-status {
+  display: inline-block;
+  line-height: 24px;
+  font-size: 12px;
+  color: #686d7d;
+
+  .status-item {
+    display: inline-block;
+
+    & + .status-item {
+      &::before {
+        content: '·';
+        padding: 5px;
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+
+    .number {
+      font-weight: 500;
+    }
+
+    &.done .number {
+      color: #31A5F7;
+    }
+    &.doing .number {
+      color: #06ce91;
+    }
+    &.pending .number {
+      color: #ea0d0d;
+    }
+    &.note .number {
+      color: #f59504;
+    }
+  }
+}
+
+.todo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  .todo-item {
+    padding: 10px 5px;
+    font-size: 20px;
+    border-bottom: solid 1px #EDEDED;
+  }
+}
