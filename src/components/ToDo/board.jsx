@@ -17,6 +17,12 @@ export default function Board (props) {
     }
   }
 
+  const addButton = (
+    showInput
+      ? <input type="text" autoFocus className="board-input" placeholder="Board name" onKeyDown={handleAddBoard} onBlur={e => !e.target.value && setShowInput(false)}/>
+      : <button title="Add a new board" onClick={(e) => {setShowInput(true)}} className="bt-add-board">+</button>
+  )
+
   return (
     <div className="board">
       <div className="board-content">
@@ -26,11 +32,9 @@ export default function Board (props) {
             key={index}
             onClick={() => props.onSelected(item.name)}>{item.label}</button>
         ))}
+        {addButton}
       </div>
       <div className="board-right">
-        {showInput
-          ? <input type="text" autoFocus className="board-input" placeholder="Board name" onKeyDown={handleAddBoard} onBlur={e => !e.target.value && setShowInput(false)}/>
-          : <button title="Add a new board" onClick={(e) => {setShowInput(true)}} className="bt-add-board">+</button>}
       </div>
     </div>
   )

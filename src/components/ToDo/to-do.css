@@ -28,6 +28,23 @@
   font-weight: 300;
   color: #e6e6e6;
 }
+.to-do .control {
+  border-bottom: solid 1px #EDEDED;
+  border-top: solid 1px #EDEDED;
+  padding: 2px 15px;
+  background: #f6f7f9;
+  margin: 0 -15px;
+}
+.to-do .footer {
+  border-top: solid 1px #EDEDED;
+  padding-top: 10px;
+}
+.to-do .no-data {
+  padding: 30px;
+  text-align: center;
+  font-size: 13px;
+  color: #c1c5cf;
+}
 .board {
   display: flex;
   flex-direction: row;
@@ -35,7 +52,6 @@
 }
 .board .board-content {
   overflow: hidden;
-  white-space: nowrap;
 }
 .board .board-right {
   flex: 1;
@@ -51,6 +67,8 @@
   font-size: 13px;
   cursor: pointer;
   color: #BCC1CB;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 .board .board-item:hover,
 .board .bt-add-board:hover {
@@ -62,18 +80,17 @@
   border-color: #31A5F7;
   color: #31A5F7;
 }
-.board .board-item + .board-item,
-.board .bt-add-board + .board-item {
-  margin-left: 10px;
-}
 .board .bt-add-board {
   border-style: dashed;
+  margin-bottom: 0;
+  margin-right: 0;
 }
 .board .board-input {
   border: none;
   outline: none;
   width: auto;
   max-width: 100px;
+  line-height: 24px;
 }
 .board .board-input::-webkit-input-placeholder {
   font-style: italic;
@@ -129,4 +146,19 @@
   padding: 10px 5px;
   font-size: 20px;
   border-bottom: solid 1px #EDEDED;
+  display: flex;
+  flex-direction: row;
+}
+.todo-list .todo-item:last-child {
+  border-bottom: none;
+}
+.todo-list .todo-item .content {
+  flex: 1;
+}
+.todo-list .todo-item.is-done .content {
+  text-decoration: line-through;
+  color: #bec2cb;
+}
+.todo-list .todo-item .left {
+  margin-right: 5px;
 }

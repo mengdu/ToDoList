@@ -31,6 +31,26 @@
       color: #e6e6e6;
     }
   }
+
+  .control {
+    border-bottom: solid 1px #EDEDED;
+    border-top: solid 1px #EDEDED;
+    padding: 2px 15px;
+    background: #f6f7f9;
+    margin: 0 -15px;
+  }
+
+  .footer {
+    border-top: solid 1px #EDEDED;
+    padding-top: 10px;
+  }
+
+  .no-data {
+    padding: 30px;
+    text-align: center;
+    font-size: 13px;
+    color: #c1c5cf;
+  }
 }
 
 .board {
@@ -40,7 +60,7 @@
 
   .board-content {
     overflow: hidden;
-    white-space: nowrap;
+    // white-space: nowrap;
   }
 
   .board-right {
@@ -58,6 +78,8 @@
     font-size: 13px;
     cursor: pointer;
     color: #BCC1CB;
+    margin-right: 10px;
+    margin-bottom: 10px;
     
     &:hover {
       color: #A2A2A5;
@@ -68,14 +90,12 @@
       border-color: #31A5F7;
       color: #31A5F7;
     }
-
-    & + .board-item {
-      margin-left: 10px;
-    }
   }
 
   .bt-add-board {
     border-style: dashed;
+    margin-bottom: 0;
+    margin-right: 0;
   }
 
   .board-input {
@@ -83,6 +103,7 @@
     outline: none;
     width: auto;
     max-width: 100px;
+    line-height: 24px;
 
     &::-webkit-input-placeholder {
       font-style: italic;
@@ -150,5 +171,24 @@
     padding: 10px 5px;
     font-size: 20px;
     border-bottom: solid 1px #EDEDED;
+    display: flex;
+    flex-direction: row;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .content {
+      flex: 1;
+    }
+
+    &.is-done .content {
+      text-decoration: line-through;
+      color: #bec2cb;
+    }
+
+    .left {
+      margin-right: 5px;
+    }
   }
 }
