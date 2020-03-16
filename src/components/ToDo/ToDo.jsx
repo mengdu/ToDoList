@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import Board from './board'
 import ToDoList from './ToDoList'
 import Pagination from '../pagination'
@@ -6,8 +8,9 @@ import Pagination from '../pagination'
 function ToDoStatus (props) {
   return (
     <div className="todo-status">
-      <div className="status-item pending"><span className="number">{props.data.pending}</span> Pending</div>
-      <div className="status-item done"><span className="number">{props.data.done}</span> Done</div>
+      <div className="status-item"><span className="number">{props.data.total}</span> Total</div>
+      <div className="status-item pending"><span className="number error">{props.data.pending}</span> Pending</div>
+      <div className="status-item done"><span className="number info">{props.data.done}</span> Done</div>
       {/* <div className="status-item doing"><span className="number">23</span> Doing</div> */}
       {/* <div className="status-item note"><span className="number">5</span> Note</div> */}
     </div>
@@ -41,6 +44,15 @@ export default function ToDo (props) {
       })
     })
     cb(null)
+  }
+
+  function handleRemoveBoard (id) {
+    store.delBoard(id).then(res => {
+      store.getBoardList().then(result => {
+        setCurrentBoard('all')
+        setBoardList(result.list)
+      })
+    })
   }
 
   function handleAddTodo (e) {
@@ -114,6 +126,11 @@ export default function ToDo (props) {
           onAdd={handleAddBoard}/>
         <div className="control">
           <ToDoStatus data={status} />
+          <div className="right">
+            {currentBoard !== 'all'
+              ? <button className="td-btn" title="Remove current board" onClick={() => handleRemoveBoard(currentBoard)}><FontAwesomeIcon icon={faTrashAlt} /></button>
+              : null}
+          </div>
         </div>
       </div>
       <div className="content">
@@ -124,7 +141,7 @@ export default function ToDo (props) {
           currentPage={page}
           total={count}
           pageSize={10}
-          layout="total,prev,pager,next"
+          layout="prev,pager,next"
           background={true}
           onCurrentChange={setPage}
           />

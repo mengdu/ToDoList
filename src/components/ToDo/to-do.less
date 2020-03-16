@@ -38,6 +38,10 @@
     padding: 2px 15px;
     background: #f6f7f9;
     margin: 0 -15px;
+
+    .right {
+      float: right;
+    }
   }
 
   .footer {
@@ -50,6 +54,19 @@
     text-align: center;
     font-size: 13px;
     color: #c1c5cf;
+  }
+
+  .td-btn {
+    outline: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #616a72;
+    padding: 2px 5px;
+
+    &:hover {
+      color: #2f4456;
+    }
   }
 }
 
@@ -145,19 +162,23 @@
 
     .number {
       font-weight: 500;
-    }
+      color: #616a73;
 
-    &.done .number {
-      color: #31A5F7;
-    }
-    &.doing .number {
-      color: #06ce91;
-    }
-    &.pending .number {
-      color: #ea0d0d;
-    }
-    &.note .number {
-      color: #f59504;
+      &.info {
+        color: #31A5F7;
+      }
+
+      &.error {
+        color: #ea0d0d;
+      }
+
+      &.success {
+        color: #06ce91;
+      }
+
+      &.warn {
+        color: #f59504;
+      }
     }
   }
 }

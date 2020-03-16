@@ -100,6 +100,16 @@ export default class LocalStore extends ToDoStoreInterface {
     const { page = 1, pageSize = 10 } = params
     let list = this.get(this.todoListKey, [])
     const start = (page - 1) * pageSize
+    const sortKey = params.sortKey || 'createdAt'
+    const sortType = params.sortType || 'desc'
+
+    list.sort((a, b) => {
+      if (sortType === 'desc') {
+        return b[sortKey] - a[sortKey]
+      } else {
+        return a[sortKey] - b[sortKey]
+      }
+    })
 
     if (params.tagId) {
       list = list.filter(e => e.tagId === params.tagId)
@@ -107,7 +117,8 @@ export default class LocalStore extends ToDoStoreInterface {
 
     const status = {
       done: 0,
-      pending: 0
+      pending: 0,
+      total: list.length
     }
 
     for (const i in list) {
