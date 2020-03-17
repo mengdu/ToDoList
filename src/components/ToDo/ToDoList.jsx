@@ -1,6 +1,7 @@
 import React from 'react'
 import Checkbox from '../checkbox'
 import { classList } from '../../utils'
+import SvgIconClose from '../svg/close'
 
 function ToDoItem (props) {
 
@@ -12,6 +13,9 @@ function ToDoItem (props) {
       <div className="content">
         <h4 className="title">{props.data.title}</h4>
       </div>
+      <div className="right">
+        <button className="td-btn td-delete-todo" onClick={() => props.onDelete(props.data)}><SvgIconClose /></button>
+      </div>
     </div>
   )
 }
@@ -22,7 +26,11 @@ export default function ToDoList (props) {
       {props.list.length === 0 ? <div className="no-data">No data</div> : null}
       {props.list.map((item, index) => {
         return (
-          <ToDoItem data={item} key={index} onStatus={e => props.onChangeStatus(e, item, index)}/>
+          <ToDoItem
+            data={item}
+            key={index}
+            onStatus={e => props.onChangeStatus(e, item, index)}
+            onDelete={props.onDelete}/>
         )
       })}
     </ul>

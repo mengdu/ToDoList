@@ -23,3 +23,35 @@ export function classList (obj) {
 
   return arr.join(' ')
 }
+
+export function list2dict (arr, key = 'id', fn = e => e) {
+  const dict = {}
+  for (const i in arr) {
+    const item = arr[i]
+    dict[item[key]] = fn(item)
+  }
+  return dict
+}
+
+// 转63进制
+export function numberConvert63 (num) {
+  const str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  const res = []
+  const len = str.length
+  let n = num
+
+  while (true) {
+    const v1 = parseInt(n / len)
+    const v2 = n % len
+
+    res.unshift(str[v2])
+
+    if (v1 > 0) {
+      n = v1
+    } else {
+      break
+    }
+  }
+
+  return res.join('')
+}

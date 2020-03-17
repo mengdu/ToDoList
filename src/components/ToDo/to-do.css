@@ -34,9 +34,11 @@
   padding: 2px 15px;
   background: #f6f7f9;
   margin: 0 -15px;
+  display: flex;
+  flex-direction: row;
 }
-.to-do .control .right {
-  float: right;
+.to-do .control .main {
+  flex: 1;
 }
 .to-do .footer {
   border-top: solid 1px #EDEDED;
@@ -54,10 +56,18 @@
   background: none;
   cursor: pointer;
   color: #616a72;
-  padding: 2px 5px;
+  padding: 2px;
+  width: 16px;
+  height: 16px;
 }
 .to-do .td-btn:hover {
   color: #2f4456;
+}
+.to-do .td-btn.is-checked {
+  color: #05AA86;
+}
+.to-do .td-btn + .td-btn {
+  margin-left: 10px;
 }
 .board {
   display: flex;
@@ -72,32 +82,43 @@
   padding: 0 10px;
 }
 .board .board-item,
-.board .bt-add-board {
+.board .bt-add-board,
+.board .bt-remove-board {
   border-radius: 50px;
   background: none;
   outline: none;
   border: solid 1px #e0e4ec;
-  padding: 4px 15px;
+  padding: 0px 15px;
   font-size: 13px;
   cursor: pointer;
   color: #BCC1CB;
   margin-right: 10px;
   margin-bottom: 10px;
+  line-height: 25px;
 }
 .board .board-item:hover,
-.board .bt-add-board:hover {
+.board .bt-add-board:hover,
+.board .bt-remove-board:hover {
   color: #A2A2A5;
   border-color: #A2A2A5;
 }
 .board .board-item.is-active,
-.board .bt-add-board.is-active {
+.board .bt-add-board.is-active,
+.board .bt-remove-board.is-active {
   border-color: #31A5F7;
   color: #31A5F7;
 }
 .board .bt-add-board {
   border-style: dashed;
   margin-bottom: 0;
-  margin-right: 0;
+}
+.board .bt-remove-board {
+  border-style: none;
+  padding: 0;
+  color: #676e75;
+}
+.board .bt-remove-board:hover {
+  color: #F74D50;
 }
 .board .board-input {
   border: none;
@@ -157,6 +178,15 @@
   margin: 0;
   padding: 0;
 }
+.todo-list .td-delete-todo {
+  width: 20px;
+  height: 20px;
+  background: #dbdde0;
+  border-radius: 20px;
+}
+.todo-list .td-delete-todo:hover {
+  color: #EA0D0D;
+}
 .todo-list .todo-item {
   padding: 10px 5px;
   font-size: 20px;
@@ -187,4 +217,7 @@
 }
 .todo-list .todo-item .left {
   margin-right: 5px;
+}
+.todo-list .todo-item:hover .td-delete-todo {
+  display: inline-block;
 }

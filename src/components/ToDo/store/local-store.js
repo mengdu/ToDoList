@@ -1,4 +1,5 @@
 import ToDoStoreInterface from './base'
+import { numberConvert63 } from '../../../utils'
 
 export default class LocalStore extends ToDoStoreInterface {
   constructor (options = {}) {
@@ -25,8 +26,9 @@ export default class LocalStore extends ToDoStoreInterface {
 
   async addBoard (data) {
     const list = this.get(this.boardKey, [])
-    data.id = Date.now()
-    data.createdAt = Date.now()
+    const now = Date.now()
+    data.id = numberConvert63(now)
+    data.createdAt = now
     this.set(this.boardKey, [...list, data])
 
     return { ret: 0, msg: 'ok' }
@@ -53,8 +55,9 @@ export default class LocalStore extends ToDoStoreInterface {
 
   async addTask (data) {
     const list = this.get(this.todoListKey, [])
-    data.id = Date.now()
-    data.createdAt = Date.now()
+    const now = Date.now()
+    data.id = numberConvert63(now)
+    data.createdAt = now
 
     this.set(this.todoListKey, [...list, data])
     return { ret: 0, msg: 'ok' }
@@ -103,17 +106,21 @@ export default class LocalStore extends ToDoStoreInterface {
     const sortKey = params.sortKey || 'createdAt'
     const sortType = params.sortType || 'desc'
 
-    list.sort((a, b) => {
-      if (sortType === 'desc') {
-        return b[sortKey] - a[sortKey]
-      } else {
-        return a[sortKey] - b[sortKey]
-      }
-    })
-
     if (params.tagId) {
       list = list.filter(e => e.tagId === params.tagId)
     }
+
+    if (typeof params.status !== 'undefined') {
+      list = list.filter(e => e.status === params.status)
+    }
+
+    list.sort((a, b) => {
+      if (sortType === 'desc') {
+        return a[sortKey] > b[sortKey] ? -1 : 1
+      } else {
+        return a[sortKey] < b[sortKey] ? -1 : 1
+      }
+    })
 
     const status = {
       done: 0,

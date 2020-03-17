@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { classList } from '../../utils'
 
 export default function Board (props) {
@@ -33,6 +35,9 @@ export default function Board (props) {
             onClick={() => props.onSelected(item.name)}>{item.label}</button>
         ))}
         {addButton}
+        {props.value !== 'all' ? (
+          <button className="bt-remove-board" title="Remove current board" onClick={props.onRemove}><FontAwesomeIcon icon={faTrashAlt} /></button>
+        ) : null}
       </div>
       <div className="board-right">
       </div>

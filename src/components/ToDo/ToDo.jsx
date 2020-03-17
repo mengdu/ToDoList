@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faSortAmountUp, faSortAmountDownAlt, faCheck } from '@fortawesome/free-solid-svg-icons'
 import Board from './board'
 import ToDoList from './ToDoList'
 import Pagination from '../pagination'
+import { Confirm } from '../modal'
+import { list2dict } from '../../utils'
+import taskDoneAudio from '../../assets/audio/task_done.mp3'
+// import successAudio from '../../assets/audio/success.mp3'
+// import buttonClickAudio from '../../assets/audio/button_click.mp3'
 
 function ToDoStatus (props) {
   return (
@@ -25,17 +30,24 @@ export default function ToDo (props) {
   const [page, setPage] = useState(1)
   const [count, setCount] = useState(0)
   const [status, setStaus] = useState({ done: 0, pending: 0 })
+  const [sortCreatedAt, setSortCreatedAt] = useState(1)
+  const [sortStatus, setSortStatus] = useState()
+  const [player, setPlayer] = useState(null)
 
-  const allBoardList = useMemo(() => {
-    return [].concat([{ name: 'all', label: 'All' }], boardList.map(e => {
-      e.name = e.id
-      return e
-    }))
+  const [allBoardList, boardListDict] = useMemo(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return [
+      [].concat([{ name: 'all', label: 'All' }], boardList.map(e => {
+        e.name = e.id
+        return e
+      })),
+      list2dict(boardList, 'id')
+    ]
   }, [boardList])
 
   useMemo(() => {
     handleGetList()
-  }, [currentBoard, page]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [currentBoard, page, sortCreatedAt, sortStatus]) // eslint-disable-line react-hooks/exhaustive-deps
 
   function handleAddBoard (data, cb) {
     store.addBoard(data).then(res => {
@@ -47,10 +59,14 @@ export default function ToDo (props) {
   }
 
   function handleRemoveBoard (id) {
-    store.delBoard(id).then(res => {
-      store.getBoardList().then(result => {
-        setCurrentBoard('all')
-        setBoardList(result.list)
+    const boardName = boardListDict[id] ? boardListDict[id].label : id
+    Confirm(<div>Are you sure to remove the <strong>{boardName}</strong> board?</div>, { noReject: true }).then(e => {
+      if (!e.confirm) return
+      store.delBoard(id).then(res => {
+        store.getBoardList().then(result => {
+          setCurrentBoard('all')
+          setBoardList(result.list)
+        })
       })
     })
   }
@@ -79,6 +95,16 @@ export default function ToDo (props) {
     e.target.value = ''
   }
 
+  function handleDeleteTodo (e) {
+    Confirm(<div>Are you sure you want to delete this task?</div>, { noReject: true }).then(c => {
+      if (c.confirm) {
+        store.delTask(e.id).then(() => {
+          handleGetList()
+        })
+      }
+    })
+  }
+
   function handleTodoStatus (status, item, index) {
     // console.log(index, status, item.id)
     store.updateTask({
@@ -87,12 +113,21 @@ export default function ToDo (props) {
     }).then((res) => {
       handleGetList()
     })
+
+    // done
+    if (status === 0 && player) {
+      player.src = taskDoneAudio
+      player.play()
+    }
   }
 
   function handleGetList () {
     const params = {
       tagId: currentBoard !== 'all' ? currentBoard : '',
-      page: page
+      page: page,
+      sortKey: 'createdAt',
+      sortType: sortCreatedAt === 1 ? 'desc' : 'asc',
+      status: sortStatus
     }
 
     store.getTaskList(params).then(res => {
@@ -107,7 +142,12 @@ export default function ToDo (props) {
       setBoardList(result.list)
     })
 
-    // handleGetList()
+    if (props.enableAudio) {
+      const audio = new Audio()
+      audio.volume = 0.8
+
+      setPlayer(audio)
+    }
   }, [store]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -123,18 +163,31 @@ export default function ToDo (props) {
           list={allBoardList}
           value={currentBoard}
           onSelected={e => {setCurrentBoard(e);setPage(1)}}
-          onAdd={handleAddBoard}/>
+          onAdd={handleAddBoard}
+          onRemove={() => handleRemoveBoard(currentBoard)}/>
         <div className="control">
-          <ToDoStatus data={status} />
+          <div className="main">
+            <button className={'td-btn' + (sortStatus === 0 ? ' is-checked' : '')}
+              title="Show done only"
+              onClick={() => setSortStatus(sortStatus === 0 ? undefined : 0)}>
+                <FontAwesomeIcon icon={faCheck} />
+            </button>
+            <button className="td-btn"
+              title="Sort time"
+              onClick={() => setSortCreatedAt(sortCreatedAt === 1 ? 2 : 1)}>
+                <FontAwesomeIcon icon={sortCreatedAt === 1 ? faSortAmountUp : faSortAmountDownAlt} />
+            </button>
+          </div>
           <div className="right">
-            {currentBoard !== 'all'
-              ? <button className="td-btn" title="Remove current board" onClick={() => handleRemoveBoard(currentBoard)}><FontAwesomeIcon icon={faTrashAlt} /></button>
-              : null}
+            <ToDoStatus data={status} />
           </div>
         </div>
       </div>
       <div className="content">
-        <ToDoList list={todoList} onChangeStatus={handleTodoStatus}/>
+        <ToDoList
+          list={todoList}
+          onChangeStatus={handleTodoStatus}
+          onDelete={handleDeleteTodo}/>
       </div>
       <div className="footer">
         <Pagination
