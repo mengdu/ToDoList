@@ -79,7 +79,5 @@ export default function alert (msg, options = {}) {
       >{msg}</Message>)
 
     ReactDOM.render(instance, div)
-    
-    console.log(instance)
   })
 }
