@@ -57,11 +57,48 @@
 
   &-footer {
     padding: 15px;
+
+    .align-center {
+      text-align: center;
+    }
+
+    .align-right {
+      text-align: right;
+    }
   }
 
   &-content {
     padding: 15px;
     overflow: auto;
+  }
+
+  &-cancel-button,
+  &-confirm-button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 8px 15px;
+    border-radius: 3px;
+    font-size: 14px;
+    display: inline-block;
+    background: #fff;
+    color: #4D525D;
+  }
+
+  &-cancel-button {
+    &:hover {
+      color: #F03E46;
+      background: #FAF0F0;
+    }
+  }
+
+  &-confirm-button {
+    margin-left: 10px;
+    color: #15a5f9;
+
+    &:hover {
+      background: #ecf2f9;
+    }
   }
 }
 

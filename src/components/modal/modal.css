@@ -53,9 +53,38 @@
 .modal-footer {
   padding: 15px;
 }
+.modal-footer .align-center {
+  text-align: center;
+}
+.modal-footer .align-right {
+  text-align: right;
+}
 .modal-content {
   padding: 15px;
   overflow: auto;
+}
+.modal-cancel-button,
+.modal-confirm-button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 8px 15px;
+  border-radius: 3px;
+  font-size: 14px;
+  display: inline-block;
+  background: #fff;
+  color: #4D525D;
+}
+.modal-cancel-button:hover {
+  color: #F03E46;
+  background: #FAF0F0;
+}
+.modal-confirm-button {
+  margin-left: 10px;
+  color: #15a5f9;
+}
+.modal-confirm-button:hover {
+  background: #ecf2f9;
 }
 @keyframes color-in {
   from {
