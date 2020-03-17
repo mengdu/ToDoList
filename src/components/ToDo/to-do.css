@@ -35,6 +35,9 @@
   background: #f6f7f9;
   margin: 0 -15px;
 }
+.to-do .control .right {
+  float: right;
+}
 .to-do .footer {
   border-top: solid 1px #EDEDED;
   padding-top: 10px;
@@ -44,6 +47,17 @@
   text-align: center;
   font-size: 13px;
   color: #c1c5cf;
+}
+.to-do .td-btn {
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #616a72;
+  padding: 2px 5px;
+}
+.to-do .td-btn:hover {
+  color: #2f4456;
 }
 .board {
   display: flex;
@@ -124,17 +138,18 @@
 }
 .todo-status .status-item .number {
   font-weight: 500;
+  color: #616a73;
 }
-.todo-status .status-item.done .number {
+.todo-status .status-item .number.info {
   color: #31A5F7;
 }
-.todo-status .status-item.doing .number {
-  color: #06ce91;
-}
-.todo-status .status-item.pending .number {
+.todo-status .status-item .number.error {
   color: #ea0d0d;
 }
-.todo-status .status-item.note .number {
+.todo-status .status-item .number.success {
+  color: #06ce91;
+}
+.todo-status .status-item .number.warn {
   color: #f59504;
 }
 .todo-list {
