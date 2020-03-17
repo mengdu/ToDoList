@@ -10,7 +10,7 @@ function ToDoItem (props) {
         <Checkbox value={props.data.status} trueValue={0} falseValue={1} onChange={props.onStatus}/>
       </div>
       <div className="content">
-      {props.data.title}
+        <h4 className="title">{props.data.title}</h4>
       </div>
     </div>
   )

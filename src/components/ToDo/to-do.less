@@ -180,6 +180,19 @@
 
     .content {
       flex: 1;
+
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+
+      .title {
+        font-size: inherit;
+        font-weight: inherit;
+        margin: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
     }
 
     &.is-done .content {

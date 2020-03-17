@@ -154,6 +154,17 @@
 }
 .todo-list .todo-item .content {
   flex: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.todo-list .todo-item .content .title {
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .todo-list .todo-item.is-done .content {
   text-decoration: line-through;
