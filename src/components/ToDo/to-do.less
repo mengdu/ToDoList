@@ -67,6 +67,7 @@
     padding: 2px;
     width: 16px;
     height: 16px;
+    margin-right: 10px;
 
     &:hover {
       color: #2f4456;
@@ -75,9 +76,26 @@
     &.is-checked {
       color: #05AA86;
     }
+  }
 
-    & + .td-btn {
-      margin-left: 10px;
+  .td-input {
+    outline: none;
+    padding: 10px 15px;
+    border: solid 1px #EDEDED;
+    border-radius: 4px;
+    box-sizing: border-box;
+
+    &:hover {
+      border-color: #b7b7b7;
+    }
+
+    &:focus {
+      border-color: #1ca4fb;
+    }
+
+    &.td-input--block {
+      display: block;
+      width: 100%;
     }
   }
 }
@@ -216,6 +234,7 @@
     background: #dbdde0;
     border-radius: 20px;
     vertical-align: middle;
+    margin-right: 0;
     // display: none;
 
     &:hover {

@@ -1,5 +1,5 @@
 import ToDoStoreInterface from './base'
-import { numberConvert63 } from '../../../utils'
+import { numberConvert63, list2dict } from '../../../utils'
 
 export default class LocalStore extends ToDoStoreInterface {
   constructor (options = {}) {
@@ -146,6 +146,31 @@ export default class LocalStore extends ToDoStoreInterface {
       list: pageList,
       count: list.length,
       status: status
+    }
+  }
+
+  async getTodoRaw (params) {
+    let list = this.get(this.todoListKey, [])
+    const boardList = this.get(this.boardKey, [])
+    const boardListDict = list2dict(boardList, 'id')
+
+    if (params.tagId) {
+      list = list.filter(e => e.tagId === params.tagId)
+    }
+
+    list.sort((a, b) => {
+      return a < b ? -1 : 1
+    })
+
+    list.map(e => {
+      e.board = boardListDict[e.tagId] || null
+      return e
+    })
+
+    return {
+      ret: 0,
+      msg: 'ok',
+      list: list
     }
   }
 }

@@ -59,6 +59,7 @@
   padding: 2px;
   width: 16px;
   height: 16px;
+  margin-right: 10px;
 }
 .to-do .td-btn:hover {
   color: #2f4456;
@@ -66,8 +67,22 @@
 .to-do .td-btn.is-checked {
   color: #05AA86;
 }
-.to-do .td-btn + .td-btn {
-  margin-left: 10px;
+.to-do .td-input {
+  outline: none;
+  padding: 10px 15px;
+  border: solid 1px #EDEDED;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.to-do .td-input:hover {
+  border-color: #b7b7b7;
+}
+.to-do .td-input:focus {
+  border-color: #1ca4fb;
+}
+.to-do .td-input.td-input--block {
+  display: block;
+  width: 100%;
 }
 .board {
   display: flex;
@@ -184,6 +199,7 @@
   background: #dbdde0;
   border-radius: 20px;
   vertical-align: middle;
+  margin-right: 0;
 }
 .todo-list .td-delete-todo:hover {
   color: #EA0D0D;

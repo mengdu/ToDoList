@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSortAmountUp, faSortAmountDownAlt, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faSortAmountUp, faSortAmountDownAlt, faCheck, faCode } from '@fortawesome/free-solid-svg-icons'
 import Board from './board'
 import ToDoList from './ToDoList'
 import Pagination from '../pagination'
 import { Confirm } from '../modal'
 import { list2dict } from '../../utils'
 import taskDoneAudio from '../../assets/audio/task_done.mp3'
+import Modal from '../modal/modal'
 // import successAudio from '../../assets/audio/success.mp3'
 // import buttonClickAudio from '../../assets/audio/button_click.mp3'
 
@@ -22,6 +23,59 @@ function ToDoStatus (props) {
   )
 }
 
+function ViewRaw (props) {
+  const currentBoard = props.currentBoard
+  const [data, setData] = useState('')
+
+  useMemo(() => {
+    getRaw()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentBoard])
+
+  function getRaw () {
+    const params = {
+      tagId: currentBoard !== 'all' ? currentBoard : ''
+    }
+
+    props.store.getTodoRaw(params).then(res => {
+      const dict = {}
+      for (const i in res.list) {
+        const item = res.list[i]
+        if (dict[item.tagId]) {
+          dict[item.tagId].list.push(item)
+        } else {
+          dict[item.tagId] = {
+            board: item.board,
+            list: [item]
+          }
+        }
+      }
+
+      const raw = []
+
+      for (const i in dict) {
+        raw.push(`**${dict[i].board ? dict[i].board.label : '未分类'}**\n\n`)
+        raw.push(dict[i].list.map(e => {
+          return `+ [${e.status === 0 ? 'x' : ' '}] ${e.title}`
+        }).join('\n'))
+        raw.push('\n\n')
+      }
+  
+      setData(raw.join('') + '\n')
+    })
+  }
+  return (
+    <Modal show={props.show} title="View Raw">
+      <div className="view-raw">
+        <textarea defaultValue={data} className="td-input td-input--block" rows="10"></textarea>
+      </div>
+      <div slot="footer" className="align-right">
+        <button className="modal-confirm-button" onClick={props.onHide}>Confirm</button>
+      </div>
+    </Modal>
+  )
+}
+
 export default function ToDo (props) {
   const store = props.store
   const [currentBoard, setCurrentBoard] = useState('all')
@@ -33,6 +87,7 @@ export default function ToDo (props) {
   const [sortCreatedAt, setSortCreatedAt] = useState(1)
   const [sortStatus, setSortStatus] = useState()
   const [player, setPlayer] = useState(null)
+  const [showRaw, setShowRaw] = useState(false)
 
   const [allBoardList, boardListDict] = useMemo(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -152,6 +207,8 @@ export default function ToDo (props) {
 
   return (
     <div className="to-do">
+      <ViewRaw show={showRaw} onHide={() => setShowRaw(false)} currentBoard={currentBoard} store={store}/>
+
       <div className="header">
         <div className="input-box">
           <input type="text"
@@ -179,6 +236,12 @@ export default function ToDo (props) {
             </button>
           </div>
           <div className="right">
+            <button className="td-btn"
+              title="View raw"
+              onClick={() => setShowRaw(true)}
+              >
+                <FontAwesomeIcon icon={faCode} />
+            </button>
             <ToDoStatus data={status} />
           </div>
         </div>
