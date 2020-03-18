@@ -10,7 +10,7 @@ function App() {
     <div className="App main-container">
       <div className="todo-box">
         <h1 className="app-title">Task ToDo</h1>
-        <ToDo store={store}/>
+        <ToDo store={store} enableAudio={true}/>
       </div>
 
       <WebsiteFooter />
