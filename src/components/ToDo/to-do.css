@@ -183,6 +183,7 @@
   height: 20px;
   background: #dbdde0;
   border-radius: 20px;
+  vertical-align: middle;
 }
 .todo-list .td-delete-todo:hover {
   color: #EA0D0D;
@@ -220,4 +221,9 @@
 }
 .todo-list .todo-item:hover .td-delete-todo {
   display: inline-block;
+}
+.todo-list .todo-item .todo-time {
+  font-size: 12px;
+  padding: 5px;
+  color: #848994;
 }

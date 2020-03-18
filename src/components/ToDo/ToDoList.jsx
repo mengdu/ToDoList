@@ -2,6 +2,7 @@ import React from 'react'
 import Checkbox from '../checkbox'
 import { classList } from '../../utils'
 import SvgIconClose from '../svg/close'
+import idate from '../../utils/idate'
 
 function ToDoItem (props) {
 
@@ -14,6 +15,7 @@ function ToDoItem (props) {
         <h4 className="title">{props.data.title}</h4>
       </div>
       <div className="right">
+        <span className="todo-time" title={idate(props.data.createdAt).format()}>{idate().diff(props.data.createdAt)}</span>
         <button className="td-btn td-delete-todo" onClick={() => props.onDelete(props.data)}><SvgIconClose /></button>
       </div>
     </div>
