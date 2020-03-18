@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App main-container">
       <div className="todo-box">
-        <h1 className="app-title">Task ToDo</h1>
+        <h1 className="app-title">Task Manager</h1>
         <ToDo store={store} enableAudio={true}/>
       </div>
 
